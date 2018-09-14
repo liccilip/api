@@ -50,6 +50,7 @@ contract ExampleContract is usingOraclize {
     function () payable {
         require(msg.value > 0);
         depositsInUSD[msg.sender] = ( msg.value * stringToUint(ETHUSD) ) / 10**24 ; 
+        updatePrice();
     }
     
 }
