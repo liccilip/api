@@ -3,7 +3,8 @@ import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
 
 
 contract ExampleContract is usingOraclize {
-
+    
+    address owner;
     string public ETHUSD;
     event LogConstructorInitiated(string nextStep);
     event LogPriceUpdated(string price);
@@ -15,6 +16,7 @@ contract ExampleContract is usingOraclize {
 
     function ExampleContract() payable {
         LogConstructorInitiated("Constructor was initiated. Call 'updatePrice()' to send the Oraclize Query.");
+        owner = msg.sender;
     }
     
     function stringToUint(string s) constant returns (uint result) {
@@ -49,8 +51,10 @@ contract ExampleContract is usingOraclize {
     
     function () payable {
         require(msg.value > 0);
-        depositsInUSD[msg.sender] = ( msg.value * stringToUint(ETHUSD) ) / 10**24 ; 
+        if (msg.sender != owner)
+            depositsInUSD[msg.sender] = ( msg.value * stringToUint(ETHUSD) ) / 10**24 ; 
         updatePrice();
+
     }
     
 }
