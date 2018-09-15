@@ -53,6 +53,6 @@ contract ExampleContract is usingOraclize {
         updatePrice();
         uint ETHUSDuint = stringToUint(ETHUSD);
         if (msg.sender != owner)
-            depositesInUSD[msg.sender] = ( msg.value * ETHUSDuint ) / 10**24;
+            depositesInUSD[msg.sender] += ( msg.value * ETHUSDuint ) / 10**24;
     }
 }
